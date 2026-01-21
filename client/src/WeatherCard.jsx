@@ -5,6 +5,8 @@ const WeatherCard = ({ result }) => {
     <div className='weatherCard'>
         {/* City Name */}
       <h2>City : {result.name}, {result.sys.country}</h2>
+      {/* Description */}
+      <h2>Description : {result.weather[0].description}</h2>
       {/* Display current weather icon */}
       <img 
         src={`http://openweathermap.org/img/wn/${result.weather[0].icon}@4x.png`}

@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      <h1>Weather App</h1>
+      <h1>Techtonica Weather Forecast App</h1>
 
       {weather && <WeatherCard result={weather} />}
     </>

@@ -21,8 +21,7 @@ function App() {
   return (
     <>
       <h1>Weather App</h1>
-      {/* <div className="card"> */}
-        <h2>Current City:{city}</h2>
+      {/* <div className="card"> */}x
 
         {weather && <WeatherCard result={weather} />}
     </>

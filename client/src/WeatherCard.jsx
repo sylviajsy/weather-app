@@ -5,7 +5,10 @@ const WeatherCard = ({ result }) => {
     <div className='weatherCard'>
         {/* City Name */}
       <h2>City : {result.name}, {result.sys.country}</h2>
-      {/* current weather icon, , and  */}
+      {/* Display current weather icon */}
+      <img 
+        src={`http://openweathermap.org/img/wn/${result.weather[0].icon}@4x.png`}
+      />
       {/* Display temperature*/}
       <h2>Temperature : {result.main.temp} F</h2>
       {/* Display humidity */}

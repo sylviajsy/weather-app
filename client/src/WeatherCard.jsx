@@ -1,9 +1,10 @@
 import React from 'react'
 
-const WeatherCard = () => {
+const WeatherCard = ({ result }) => {
   return (
-    <div>
-      
+    <div className='weatherCard'>
+        {/* City Name */}
+      <h2>{result.name}</h2>
     </div>
   )
 }

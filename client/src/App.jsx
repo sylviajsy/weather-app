@@ -24,7 +24,7 @@ function App() {
       {/* <div className="card"> */}
         <h2>Current City:{city}</h2>
 
-        {weather && <WeatherCard data={weather} />}
+        {weather && <WeatherCard result={weather} />}
     </>
   )
 }

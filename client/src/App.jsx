@@ -22,9 +22,7 @@ function App() {
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-      <form>
-        
-      </form>
+      <WeatherForm />
       {weather && <WeatherCard result={weather} />}
     </>
   )

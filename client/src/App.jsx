@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import WeatherCard from './WeatherCard.jsx';
 
 function App() {
   const [city, setCity] = useState("Austin");
@@ -22,9 +23,8 @@ function App() {
       <h1>Weather App</h1>
       {/* <div className="card"> */}
         <h2>Current City:{city}</h2>
-        {/* <p>
-          {weather}
-        </p> */}
+
+        {weather && <WeatherCard data={weather} />}
     </>
   )
 }

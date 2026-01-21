@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import WeatherForm from './WeatherForm.jsx';
 import WeatherCard from './WeatherCard.jsx';
 
 function App() {
@@ -21,7 +22,9 @@ function App() {
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-
+      <form>
+        
+      </form>
       {weather && <WeatherCard result={weather} />}
     </>
   )

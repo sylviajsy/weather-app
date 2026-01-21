@@ -13,8 +13,8 @@ app.get('/weather', async(req, res) => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
     const params = new URLSearchParams({
         // Client input
-        // q:req.query.cityName,
-        q:"Austin",
+        q:req.query.cityName,
+        // q:"Austin",
         appid:process.env.OPENWEATHER_API_KEY,
         units:"imperial"
     })

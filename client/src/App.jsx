@@ -7,7 +7,7 @@ function App() {
   const [city, setCity] = useState("Austin");
   const [weather, setWeather] = useState(null);
   
-  const loadCity = async () => {
+  const loadCity = async (city) => {
     const response = await fetch(`http://localhost:8080/weather?cityName=${city}`);
     const data = await response.json();
     console.log("Data Received:", data);
@@ -16,13 +16,13 @@ function App() {
   }
 
   useEffect(() => {
-    loadCity();
-  }, []);
+    loadCity(city);
+  }, [city]);
 
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-      <WeatherForm onSearch={loadCity}/>
+      <WeatherForm onSearch={loadCity} />
       {weather && <WeatherCard result={weather} />}
     </>
   )

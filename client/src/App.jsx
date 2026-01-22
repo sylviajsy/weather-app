@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-      <WeatherForm />
+      <WeatherForm onSearch={loadCity}/>
       {weather && <WeatherCard result={weather} />}
     </>
   )

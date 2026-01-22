@@ -1,18 +1,21 @@
 import React from 'react'
 import { useState } from 'react'
 
-const WeatherForm = () => {
+const WeatherForm = ({ onSearch }) => {
     const [input, setInput] = useState("");
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        // Passing state from child to parent
+        onSearch(input);
     }
   
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <Input 
-
+        <input 
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
         />
         <button type="submit">Search</button>
       </form>

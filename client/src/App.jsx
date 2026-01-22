@@ -7,6 +7,7 @@ function App() {
   const [city, setCity] = useState("Austin");
   const [weather, setWeather] = useState(null);
   
+  // If there's data returned from child, we need to put it in ()
   const loadCity = async (city) => {
     const response = await fetch(`http://localhost:8080/weather?cityName=${city}`);
     const data = await response.json();
@@ -17,7 +18,8 @@ function App() {
 
   useEffect(() => {
     loadCity(city);
-  }, [city]);
+    // Dependency Array: Whenever city value changes, render once
+  }, []);
 
   return (
     <>

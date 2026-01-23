@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.get('/weather', async(req, res) => {
     const query = req.query.query;
-    // Regular Expression, if numbers, then zip code
+    // Regular Expression, if numbers, then zip code API
     const isZip = /^\d+$/.test(query);
 
     let params;

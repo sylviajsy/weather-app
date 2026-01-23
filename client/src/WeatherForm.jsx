@@ -14,6 +14,7 @@ const WeatherForm = ({ onSearch }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <input 
+            type='text'
             value={input}
             onChange={(e) => setInput(e.target.value)}
         />

@@ -15,6 +15,7 @@ const WeatherForm = ({ onSearch }) => {
       <form onSubmit={handleSubmit}>
         <input 
             type='text'
+            placeholder='Search for a city ...'
             required
             value={input}
             onChange={(e) => setInput(e.target.value)}

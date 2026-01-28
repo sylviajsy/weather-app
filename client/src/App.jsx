@@ -6,15 +6,18 @@ import WeatherCard from './WeatherCard.jsx';
 function App() {
   const [input, setInput] = useState("Austin");
   const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [unit, setUnit] = useState("F");
   
   // If there's data returned from child, we need to put it in ()
   const loadInput = async (input) => {
+    setLoading(true);
     const response = await fetch(`http://localhost:8080/weather?query=${input}`);
     const data = await response.json();
     console.log("Data Received:", data);
     setInput(input);
     setWeather(data);
+    setLoading(false);
   }
 
   const toggleUnit = () => {

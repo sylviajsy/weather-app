@@ -30,7 +30,11 @@ function App() {
     <>
       <h1>Techtonica Weather Forecast App</h1>
       <WeatherForm onSearch={loadInput} />
-      {weather && <WeatherCard result={weather} />}
+      {weather && 
+      <button>
+        Switch to {unit === "F" ? "°C" : "°F"}
+        </button>}
+      {weather && <WeatherCard result={weather} unit={unit}/>}
     </>
   )
 }

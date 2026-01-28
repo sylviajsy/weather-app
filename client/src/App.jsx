@@ -31,7 +31,7 @@ function App() {
       <h1>Techtonica Weather Forecast App</h1>
       <WeatherForm onSearch={loadInput} />
       {weather && 
-      <button>
+      <button onClick={toggleUnit}>
         Switch to {unit === "F" ? "°C" : "°F"}
         </button>}
       {weather && <WeatherCard result={weather} unit={unit}/>}

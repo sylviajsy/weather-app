@@ -20,7 +20,7 @@ const WeatherCard = ({ result,unit }) => {
         alt='weather icon'
       />
       {/* Display temperature*/}
-      <h2>Temperature : {displayTemp} °{unit}</h2>
+      <h2>Temperature : {displayTemp.toFixed(1)} °{unit}</h2>
       {/* Display humidity */}
       <h2>Humidity : {result.main.humidity} %</h2>
       {/* Display wind speed */}

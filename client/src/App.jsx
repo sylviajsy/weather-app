@@ -6,6 +6,7 @@ import WeatherCard from './WeatherCard.jsx';
 function App() {
   const [input, setInput] = useState("Austin");
   const [weather, setWeather] = useState(null);
+  const [unit, setUnit] = useState("F");
   
   // If there's data returned from child, we need to put it in ()
   const loadInput = async (input) => {
@@ -15,6 +16,8 @@ function App() {
     setInput(input);
     setWeather(data);
   }
+
+
 
   useEffect(() => {
     loadInput(input);

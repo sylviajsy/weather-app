@@ -1,6 +1,12 @@
 import React from 'react'
 
-const WeatherCard = ({ result }) => {
+const WeatherCard = ({ result,unit }) => {
+    // Calculation from F to C
+    const toCelsius = (f) => ((f - 32) * 5) / 9;
+
+    // Get the temp in F from backend
+    const tempF = result.main.temp
+    const displayTemp = unit === "C" ? toCelsius(tempF) : tempF;
     
   return (
     <div className='weatherCard'>
@@ -14,7 +20,7 @@ const WeatherCard = ({ result }) => {
         alt='weather icon'
       />
       {/* Display temperature*/}
-      <h2>Temperature : {result.main.temp} F</h2>
+      <h2>Temperature : {displayTemp} °{unit}</h2>
       {/* Display humidity */}
       <h2>Humidity : {result.main.humidity} %</h2>
       {/* Display wind speed */}

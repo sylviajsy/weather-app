@@ -17,7 +17,9 @@ function App() {
     setWeather(data);
   }
 
-
+  const toggleUnit = () => {
+    setUnit((prev) => (prev === "F" ? "C" : "F"))
+  }
 
   useEffect(() => {
     loadInput(input);

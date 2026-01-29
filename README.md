@@ -15,3 +15,9 @@ The goal of this project is to build a full-stack web application that connects 
   - Weather icon
 - Toggle between Fahrenheit (°F) and Celsius (°C)
 - Loading states to improve user experience
+
+# Nice-to-Have
+The following features are planned as future improvements:
+- 🌍 Auto-detect user location using browser geolocation
+- 📆 Multi-day or hourly weather forecast
+- 🌗 Dark mode toggle

@@ -10,11 +10,11 @@ function App() {
   const [unit, setUnit] = useState("F");
   
   // If there's data returned from child, we need to put it in ()
-  const loadInput = async (input) => {
-    const response = await fetch(`http://localhost:8080/weather?query=${input}`);
+  const loadInput = async (city) => {
+    const response = await fetch(`http://localhost:8080/weather?query=${city}`);
     const data = await response.json();
     console.log("Data Received:", data);
-    setInput(input);
+    setInput(city);
     setWeather(data);
     setLoading(false);
   }

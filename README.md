@@ -16,6 +16,16 @@ The goal of this project is to build a full-stack web application that connects 
 - Toggle between Fahrenheit (°F) and Celsius (°C)
 - Loading states to improve user experience
 
+# Technologies Used
+**Frontend**
+- React
+- JavaScript (ES6+)
+
+**Backend**
+- Node.js
+- Express
+- OpenWeatherMap API
+
 # Nice-to-Have
 The following features are planned as future improvements:
 - 🌍 Auto-detect user location using browser geolocation

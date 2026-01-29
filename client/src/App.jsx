@@ -10,11 +10,15 @@ function App() {
   const [unit, setUnit] = useState("F");
   
   // If there's data returned from child, we need to put it in ()
+  const onSearch = (city) => {
+    setInput(city);
+  };
+
   const loadInput = async (city) => {
+    setLoading(true);
     const response = await fetch(`http://localhost:8080/weather?query=${city}`);
     const data = await response.json();
     console.log("Data Received:", data);
-    setInput(city);
     setWeather(data);
     setLoading(false);
   }
@@ -26,12 +30,12 @@ function App() {
   useEffect(() => {
     loadInput(input);
     // Dependency Array: Whenever city value changes, render once
-  }, []);
+  }, [input]);
 
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-      <WeatherForm onSearch={loadInput} />
+      <WeatherForm onSearch={onSearch} />
       {weather && 
       <button onClick={toggleUnit}>
         Switch to {unit === "F" ? "°C" : "°F"}

@@ -40,7 +40,7 @@ The goal of this project is to build a full-stack web application that connects 
 - `npm install`
 - `npm run dev`
 - The frontend should run on: `http://localhost:5173`
-4.Test the Application
+4. Test the Application
 - Enter a city name and click Search
 - Enter a zip code and click Search
 - Verify that weather information is displayed correctly

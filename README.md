@@ -16,6 +16,10 @@ The goal of this project is to build a full-stack web application that connects 
 - Toggle between Fahrenheit (°F) and Celsius (°C)
 - Loading states to improve user experience
 
+https://github.com/user-attachments/assets/dbced969-fbab-41c7-87c2-7bceb34d73fd
+
+
+
 # Technologies Used
 **Frontend**
 - React

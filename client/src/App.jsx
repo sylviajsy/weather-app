@@ -9,19 +9,30 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [unit, setUnit] = useState("F");
-  
+
   // If there's data returned from child, we need to put it in ()
   const onSearch = (city) => {
     setInput(city);
   };
 
-  const loadInput = async (city) => {
+  const onLocationSearch = (lat, lon) =>{
+      setInput("");
+      loadInput(null, lat, lon);
+    }
+  const loadInput = async (city, lat = null, lon = null) => {
     setLoading(true);
     setError(null);
     setWeather(null);
     // Catch error if data not received
     try{
-      const response = await fetch(`http://localhost:8080/weather?query=${city}`);
+      let url = `http://localhost:8080/weather?`
+
+      if (city) {
+        url += `query=${city}`;
+      } else if (lat&& lon) {
+        url += `lat=${lat}&lon=${lon}`;
+      }
+      const response = await fetch(url);
       const data = await response.json();
 
       if (data.cod == "200"){
@@ -52,7 +63,7 @@ function App() {
   return (
     <>
       <h1>Techtonica Weather Forecast App</h1>
-      <WeatherForm onSearch={onSearch} />
+      <WeatherForm onSearch={onSearch} onLocationSearch={onLocationSearch} />
       {error && <h2>Error:{error}</h2>}
       {weather && 
       <button onClick={toggleUnit}>

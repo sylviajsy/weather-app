@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import db from "./db/db.js";
 
 dotenv.config();
 
@@ -43,6 +44,19 @@ app.get('/weather', async(req, res) => {
         res.status(500).json({ error: "Error fetching weather data" });
     }
 })
+
+app.get("/api/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW();");
+    res.json({
+      message: "Database connected successfully",
+      time: result.rows[0],
+    });
+  } catch (error) {
+    console.error("DB connection error:", error);
+    res.status(500).json({ error: "Database connection failed" });
+  }
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

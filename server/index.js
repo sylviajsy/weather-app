@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import db from "./db/db.js";
 
 dotenv.config();
@@ -60,31 +61,46 @@ app.get("/api/test-db", async (req, res) => {
 
 // User Login
 app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
+    const { email, password } = req.body;
+    try{
+        const result = await db.query(
+            `SELECT * FROM users WHERE email = $1`,
+            [email]
+        );
 
-  const result = await db.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email]
-  );
+        if (result.rows.length === 0) {
+            return res.status(401).json({ error: "User not found" });
+        }
 
-  if (result.rows.length === 0) {
-    return res.status(401).json({ error: "User not found" });
-  }
+        const user = result.rows[0];
 
-  const user = result.rows[0];
+        if (user.password !== password) {
+            return res.status(401).json({ error: "Wrong password" });
+        }
 
-  if (user.password !== password) {
-    return res.status(401).json({ error: "Wrong password" });
-  }
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                email: user.email,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
 
-  res.json({
-    message: "Login success",
-    user: {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    },
-  });
+        res.json({
+            message: "Login success",
+            token,
+            user: {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            },
+        });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ error: "Server error." });
+    }
+
 });
 
 const PORT = process.env.PORT || 8080;

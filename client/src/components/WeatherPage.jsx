@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import WeatherForm from './WeatherForm.jsx';
 import WeatherCard from './WeatherCard.jsx';
+import MyNavBar from './MyNavBar.jsx';
 import { toast } from "react-toastify";
 
 const WeatherPage = ({ user, setUser }) => {
@@ -9,6 +10,8 @@ const WeatherPage = ({ user, setUser }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [unit, setUnit] = useState("F");
+
+    const token = localStorage.getItem("token");
     
     // If there's data returned from child, we need to put it in ()
     const onSearch = (city) => {
@@ -51,8 +54,9 @@ const WeatherPage = ({ user, setUser }) => {
 
   return (
     <div>
+        <MyNavBar user={user} setUser={setUser}/>
         <h1>Techtonica Weather Forecast App</h1>
-        <p>Welcome, {user.username}</p>
+        
         <WeatherForm onSearch={onSearch} />
         {error && <h2>Error:{error}</h2>}
         {weather && 

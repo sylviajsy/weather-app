@@ -1,8 +1,0 @@
-{
-  "name": "weather-fullstack",
-  "private": true,
-  "scripts": {
-    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix server install",
-    "start": "npm --prefix server start"
-  }
-}

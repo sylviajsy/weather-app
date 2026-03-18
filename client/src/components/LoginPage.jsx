@@ -1,7 +1,7 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
-const LoginPage = () => {
+const LoginPage = ({ setUser }) => {
 
     const [formData, setFormData] = useState({
         email: "",
@@ -33,12 +33,11 @@ const LoginPage = () => {
                 body: JSON.stringify({ email, password }),
             });
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(d=errorData.error || "Login failed");
-            }
-
             const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Login failed");
+            }
 
             // Save JWT
             localStorage.setItem("token", data.token);

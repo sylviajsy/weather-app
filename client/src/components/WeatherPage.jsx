@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import WeatherForm from './WeatherForm.jsx';
 import WeatherCard from './WeatherCard.jsx';
+import { toast } from "react-toastify";
 
-const WeatherPage = () => {
+const WeatherPage = ({ user, setUser }) => {
     const [input, setInput] = useState("");
     const [weather, setWeather] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const WeatherPage = () => {
         setWeather(null);
         // Catch error if data not received
         try{
-        const response = await fetch(`http://localhost:8080/weather?query=${city}`);
+        const response = await fetch(`/api/weather?query=${city}`);
         const data = await response.json();
 
         if (data.cod == "200"){
@@ -51,6 +52,7 @@ const WeatherPage = () => {
   return (
     <div>
         <h1>Techtonica Weather Forecast App</h1>
+        <p>Welcome, {user.username}</p>
         <WeatherForm onSearch={onSearch} />
         {error && <h2>Error:{error}</h2>}
         {weather && 

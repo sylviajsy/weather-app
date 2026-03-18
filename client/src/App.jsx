@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-// import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/LoginPage";
 import WeatherPage from "./components/WeatherPage";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
+    if (savedUser && token) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
   
   return (
     <>
@@ -16,7 +26,11 @@ function App() {
             textAlign: "center"
           }}
       />
-      <WeatherPage />
+      {user ? (
+          <WeatherPage user={user} setUser={setUser}/>
+        ):(
+          <LoginPage setUser={setUser}/>
+      )}
     </>
   )
 }

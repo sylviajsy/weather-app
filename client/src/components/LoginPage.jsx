@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import "./LoginPage.css"
 
 const LoginPage = ({ setUser }) => {
 
@@ -57,9 +58,9 @@ const LoginPage = ({ setUser }) => {
     }
     
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <h1>Welcome to Weather App</h1>
+      <form className="login-form" onSubmit={handleSubmit}>
         <input 
             name="email" 
             type="email" 

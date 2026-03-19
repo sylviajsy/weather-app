@@ -1,0 +1,65 @@
+.favlist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.fav-card {
+  background: linear-gradient(135deg, #2f3645, #3a4152);
+  border: 1px solid #dbe7ff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 260px;
+  min-height: 220px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.fav-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.fav-city-name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.fav-weather-icon {
+  width: 70px;
+  height: 70px;
+}
+
+.fav-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fav-weather-temp{
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.fav-weather-humidity{
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f9fafb;
+}

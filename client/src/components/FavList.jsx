@@ -1,4 +1,4 @@
-import React from 'react'
+import "./FavList.css"
 
 const FavList = ({ favoriteWeather }) => {
     
@@ -22,8 +22,8 @@ const FavList = ({ favoriteWeather }) => {
                     />
                 </div>
 
-                <p2>Temperature : {item.weather.main.temp} F</p2>
-                <p2>Humidity : {item.weather.main.humidity} %</p2>
+                <p className="fav-weather-temp">Temperature : {item.weather.main.temp} F</p>
+                <p className="fav-weather-humidity">Humidity : {item.weather.main.humidity} %</p>
             </div>
         ))}
       </div>

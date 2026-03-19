@@ -59,6 +59,12 @@ const WeatherPage = ({ user, setUser }) => {
             }
 
             setFavorites(data);
+
+            if (data.length > 0) {
+                await loadFavWeather(data);
+            } else {
+                setFavoriteWeather([]);
+            }
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Something went wrong");

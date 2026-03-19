@@ -56,7 +56,7 @@ app.get('/api/fav', requireAuth, async (req, res) => {
         const userId = req.user.userId;
 
         const result = await db.query(
-            `SELECT user_id, city_name FROM favorite_cities WHERE user_id = $1`,
+            `SELECT id, city_name FROM favorite_cities WHERE user_id = $1`,
             [userId]
         );
 

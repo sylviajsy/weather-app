@@ -92,11 +92,11 @@ const WeatherPage = ({ user, setUser }) => {
                     };
                 })
             )
-
+            console.log(results);
             setFavoriteWeather(results);
         } catch (error) {
             console.error(error);
-            toast.error(error.message || `Failed to load ${city.city_name} weather`);
+            toast.error(error.message || `Failed to load your fav city weather`);
         }
     }
 
@@ -111,8 +111,8 @@ const WeatherPage = ({ user, setUser }) => {
 	return (
 		<div>
 			<MyNavBar user={user} setUser={setUser} />
-			<FavList favorites={favorites}/>
 			<WeatherForm onSearch={onSearch} />
+            <FavList favoriteWeather={favoriteWeather}/>
 			{error && <h2>Error:{error}</h2>}
 			{weather && (
 				<button type="button" onClick={toggleUnit}>

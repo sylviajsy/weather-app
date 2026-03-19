@@ -104,6 +104,39 @@ const WeatherPage = ({ user, setUser }) => {
         loadFav();
     }, []);
 
+    const isFavorite = favorites.some(
+        (fav) => fav.city_name === weather?.name
+    );
+
+    const handleFav = async() => {
+        try {
+            if (!isFavorite) {
+                const response = await fetch("/api/fav", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        cityName: weather.name,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to add favorite city");
+                }
+
+                toast.success(`${data.city_name} added to favorites`);
+            }
+            loadFav();
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Something went wrong");
+        }
+    }
+
 	const toggleUnit = () => {
 		setUnit((prev) => (prev === "F" ? "C" : "F"));
 	};
@@ -120,9 +153,16 @@ const WeatherPage = ({ user, setUser }) => {
 				</button>
 			)}
 			{loading ? (
-				<div>Loading... ⏳</div>
-			) : (
-				weather && <WeatherCard result={weather} unit={unit} />
+				    <div>Loading... ⏳</div>
+			    ) : (
+				    weather && (
+                        <>
+                            <button onClick={handleFav}>
+                                {isFavorite ? "❤️" : "🤍"}
+                            </button>
+                            <WeatherCard result={weather} unit={unit} />
+                        </>
+                    )
 			)}
 		</div>
 	);

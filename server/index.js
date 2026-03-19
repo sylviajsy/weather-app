@@ -50,6 +50,7 @@ app.get('/api/weather', async(req, res) => {
     }
 })
 
+// Get fav cities
 app.get('/api/fav', requireAuth, async (req, res) => {
     try {
         console.log("req.user:", req.user);
@@ -69,6 +70,41 @@ app.get('/api/fav', requireAuth, async (req, res) => {
         res.json(result.rows);
     } catch (error) {
         console.log("Error fetching favorites:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+})
+
+app.post('/api/fav', requireAuth, async (req, res) => {
+    try {
+        console.log("req.user:", req.user);
+        const userId = req.user.userId;
+        const { cityName } = req.body;
+
+        if (!cityName || !cityName.trim()) {
+            return res.status(400).json({ error: "City name is required" });
+        }
+
+        const trimmedCity = cityName.trim();
+
+        const existing = await db.query(
+            `SELECT id FROM favorite_cities WHERE user_id = $1 AND city_name = $2`,
+            [userId, trimmedCity]
+        );
+
+        if (existing.rows.length > 0) {
+            return res.status(409).json({ error: "City already in favorites" });
+        }
+
+        const result = await db.query(
+            `INSERT INTO favorite_cities (user_id, city_name)
+            VALUES ($1, $2)
+            RETURNING id, city_name`,
+            [userId, trimmedCity]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error("Error adding favorite city:", error);
         res.status(500).json({ error: "Server error" });
     }
 })

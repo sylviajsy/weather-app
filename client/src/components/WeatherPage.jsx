@@ -22,22 +22,23 @@ const WeatherPage = ({ user, setUser }) => {
         setLoading(true);
         setError(null);
         setWeather(null);
+
         // Catch error if data not received
         try{
-        const response = await fetch(`/api/weather?query=${city}`);
-        const data = await response.json();
+            const response = await fetch(`/api/weather?query=${city}`);
+            const data = await response.json();
 
-        if (data.cod == "200"){
-            console.log("Data Received:", data);
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to fetch weather data");
+            }
+
             setWeather(data);
-        } else {
-            setError(data.message)
-        }
         
         } catch (error) {
-        console.error(error);
+            console.error(error);
+            toast.error(error.message || "Something went wrong");
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }
 

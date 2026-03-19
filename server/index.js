@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/weather', async(req, res) => {
+app.get('/api/weather', async(req, res) => {
     const query = req.query.query;
     // Regular Expression, if numbers, then zip code API
     const isZip = /^\d+$/.test(query);
@@ -39,6 +39,9 @@ app.get('/weather', async(req, res) => {
         const response = await fetch(url);
         const data = await response.json();
         console.log("Fetched data for:", query);
+        if (!response.ok) {
+            return res.status(response.status).json(data);
+        }
         res.json(data);
     } catch(error){
         console.error(error);

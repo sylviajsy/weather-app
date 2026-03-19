@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 import MyNavBar from "./MyNavBar.jsx";
 import WeatherCard from "./WeatherCard.jsx";
@@ -62,6 +62,10 @@ const WeatherPage = ({ user, setUser }) => {
             toast.error(error.message || "Something went wrong");
         }
     }
+
+    useEffect(() => {
+        loadFav();
+    }, []);
 
 	const toggleUnit = () => {
 		setUnit((prev) => (prev === "F" ? "C" : "F"));

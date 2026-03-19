@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import db from "./db/db.js";
+import requireAuth from "./middleware/requireAuth.js";
 
 dotenv.config();
 
@@ -46,6 +47,29 @@ app.get('/api/weather', async(req, res) => {
     } catch(error){
         console.error(error);
         res.status(500).json({ error: "Error fetching weather data" });
+    }
+})
+
+app.get('/api/fav', requireAuth, async (req, res) => {
+    try {
+        console.log("req.user:", req.user);
+        const userId = req.user.userId;
+
+        const result = await db.query(
+            `SELECT user_id, city_name FROM favorite_cities WHERE user_id = $1`,
+            [userId]
+        );
+
+        console.log("favorites result:", result.rows);
+
+        if (result.rows.length === 0) {
+            return res.status(401).json({ error: "No fav city found" });
+        }
+
+        res.json(result.rows);
+    } catch (error) {
+        console.log("Error fetching favorites:", error);
+        res.status(500).json({ error: "Server error" });
     }
 })
 

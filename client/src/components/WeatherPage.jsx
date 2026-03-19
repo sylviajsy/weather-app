@@ -10,7 +10,9 @@ const WeatherPage = ({ user, setUser }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [unit, setUnit] = useState("F");
+
     const [favorites, setFavorites] = useState([]);
+    const [favoriteWeather, setFavoriteWeather] = useState([]);
 
 	const token = localStorage.getItem("token");
 
@@ -60,6 +62,35 @@ const WeatherPage = ({ user, setUser }) => {
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Something went wrong");
+        }
+    }
+
+    const loadFavWeather = async (favoriteCities) => {
+        try {
+            const results = await Promise.all(
+                favoriteCities.map(async (city) => {
+                    const response = await fetch(
+                        `/api/weather?query=${city.city_name}`
+                    );
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || `Failed to fetch weather for ${city.city_name}`);
+                    }
+
+                    return {
+                        id: city.id,
+                        city_name: city.city_name,
+                        weather: data,
+                    };
+                })
+            )
+
+            setFavoriteWeather(results);
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || `Failed to load ${city.city_name} weather`);
         }
     }
 

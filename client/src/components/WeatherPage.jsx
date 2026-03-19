@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import MyNavBar from "./MyNavBar.jsx";
 import WeatherCard from "./WeatherCard.jsx";
 import WeatherForm from "./WeatherForm.jsx";
+import FavList from "./FavList.jsx";
 
 const WeatherPage = ({ user, setUser }) => {
 	const [weather, setWeather] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [unit, setUnit] = useState("F");
+    const [favorites, setFavorites] = useState([]);
 
 	const token = localStorage.getItem("token");
 
@@ -40,6 +42,27 @@ const WeatherPage = ({ user, setUser }) => {
 		}
 	};
 
+    const loadFav = async () => {
+        try {
+            const response = await fetch(`/api/fav`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to load favorite cities");
+            }
+
+            setFavorites(data);
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Something went wrong");
+        }
+    }
+
 	const toggleUnit = () => {
 		setUnit((prev) => (prev === "F" ? "C" : "F"));
 	};
@@ -47,8 +70,7 @@ const WeatherPage = ({ user, setUser }) => {
 	return (
 		<div>
 			<MyNavBar user={user} setUser={setUser} />
-			<h1>Techtonica Weather Forecast App</h1>
-
+			<FavList favorites={favorites}/>
 			<WeatherForm onSearch={onSearch} />
 			{error && <h2>Error:{error}</h2>}
 			{weather && (

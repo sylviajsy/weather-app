@@ -109,6 +109,33 @@ app.post('/api/fav', requireAuth, async (req, res) => {
     }
 })
 
+app.delete('/api/fav/:id', requireAuth, async (req, res) => {
+    try {
+        console.log("req.user:", req.user);
+        const userId = req.user.userId;
+        const favId = req.params.id;
+
+        const result = await db.query(
+            `DELETE FROM favorite_cities
+            WHERE id = $1 AND user_id = $2
+            RETURNING id, city_name`,
+            [favId, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Favorite city not found" });
+        }
+
+        res.json({
+            message: "Favorite city removed",
+            deleted: result.rows[0],
+        });
+    } catch (error) {
+        console.log("Error deleting favorite city:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+})
+
 app.get("/api/test-db", async (req, res) => {
   try {
     const result = await db.query("SELECT NOW();");

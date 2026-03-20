@@ -212,7 +212,7 @@ const WeatherPage = ({ user, setUser }) => {
 			<MyNavBar user={user} setUser={setUser} />
 			<WeatherForm onSearch={onSearch} />
 			{error && <h2>Error:{error}</h2>}
-            {!weather && <FavList favoriteWeather={favoriteWeather}/>}
+            {!weather && <FavList favoriteWeather={favoriteWeather} handleFavList={handleFavList}/>}
 			{weather && (
 				<button type="button" onClick={toggleUnit}>
 					Switch to {unit === "F" ? "°C" : "°F"}

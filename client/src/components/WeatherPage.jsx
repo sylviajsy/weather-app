@@ -159,6 +159,50 @@ const WeatherPage = ({ user, setUser }) => {
         }
     }
 
+    const handleFavList = async (cityName, favId = null) => {
+        try{
+            if (favId){
+                const response = await fetch(`/api/fav/${favId}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to remove favorite city");
+                }
+
+                toast.success(`Removed ${cityName} from favorites successfully`);
+            } else {
+                const response = await fetch(`/api/fav`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        cityName
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to add favorite city");
+                }
+
+                toast.success(`${data.city_name} added to favorites`);
+            }
+            await loadFav();
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Something went wrong");
+        }
+    }
+
 	const toggleUnit = () => {
 		setUnit((prev) => (prev === "F" ? "C" : "F"));
 	};

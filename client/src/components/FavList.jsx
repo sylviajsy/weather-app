@@ -13,7 +13,7 @@ const FavList = ({ favoriteWeather, handleFavList }) => {
       <div className="favlist-grid">
         {favoriteWeather.map((item) => (
             <div className="fav-card" key={item.id}>
-                <button onClick={() => handleFavList(item.city_name, item.id)}>
+                <button onClick={() => handleFavList(item.city_name, item.id)} className="fav-btn">
                     ❤️
                 </button>
                 <div className="fav-card-header">

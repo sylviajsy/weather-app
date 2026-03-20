@@ -110,8 +110,29 @@ const WeatherPage = ({ user, setUser }) => {
 
     const handleFav = async() => {
         try {
-            if (!isFavorite) {
-                const response = await fetch("/api/fav", {
+            if (isFavorite) {
+
+                const favCity = favorites.find(
+                    (f) => f.city_name === weather.name
+                );
+
+                const response = await fetch(`/api/fav/${favCity.id}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to remove favorite city");
+                }
+
+                toast.success(`Removed ${favCity.city_name} from favorites successfully`);
+
+            } else {
+                const response = await fetch(`/api/fav`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -130,7 +151,8 @@ const WeatherPage = ({ user, setUser }) => {
 
                 toast.success(`${data.city_name} added to favorites`);
             }
-            loadFav();
+            
+            await loadFav();
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Something went wrong");

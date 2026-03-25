@@ -50,6 +50,32 @@ app.get('/api/weather', async(req, res) => {
     }
 })
 
+// Get a week forecast
+app.get('/api/weekly-forecast', async (req, res) => {
+    const { lat, lon } = req.query;
+
+    if (!lat || !lon) {
+        return res.status(400).json({ error: "lat and lon are required" });
+    }
+
+    try {
+        const response = await fetch (`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts,current&units=imperial&appid=${process.env.OPENWEATHER_API_KEY}`);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+                return res.status(response.status).json({
+                    error: data.message || "Failed to fetch weekly forecast",
+            });
+        }
+
+    res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error fetching weather forecast data" });
+    }
+})
+
 // Get fav cities
 app.get('/api/fav', requireAuth, async (req, res) => {
     try {

@@ -1,6 +1,6 @@
 import "./FavList.css"
 
-const FavList = ({ favoriteWeather, handleFavList, unit }) => {
+const FavList = ({ favoriteWeather, handleFavList, unit, toggleUnit }) => {
     
     if (!favoriteWeather || favoriteWeather.length === 0) {
         return <p style={{ marginTop: "20px" }}>No favorite cities yet 🌤</p>;
@@ -17,6 +17,10 @@ const FavList = ({ favoriteWeather, handleFavList, unit }) => {
     <div>
       <h2>The Weather in your Favorite Cities</h2>
 
+      <button type="button" onClick={toggleUnit}>
+			Switch to {unit === "F" ? "°C" : "°F"}
+	  </button>
+
       <div className="favlist-grid">
         {favoriteWeather.map((item) => (
             <div className="fav-card" key={item.id}>
@@ -32,7 +36,7 @@ const FavList = ({ favoriteWeather, handleFavList, unit }) => {
                     />
                 </div>
 
-                <p className="fav-weather-temp">Temperature : {convertTemp(item.weather.main.temp)} {unit}</p>
+                <p className="fav-weather-temp">Temperature : {convertTemp(item.weather.main.temp)} °{unit}</p>
                 <p className="fav-weather-humidity">Humidity : {item.weather.main.humidity} %</p>
             </div>
         ))}

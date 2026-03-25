@@ -4,6 +4,7 @@ import MyNavBar from "./MyNavBar.jsx";
 import WeatherCard from "./WeatherCard.jsx";
 import WeatherForm from "./WeatherForm.jsx";
 import FavList from "./FavList.jsx";
+import WeeklyForecastCard from "./WeeklyForecastCard.jsx";
 
 const WeatherPage = ({ user, setUser }) => {
 	const [weather, setWeather] = useState(null);
@@ -38,6 +39,7 @@ const WeatherPage = ({ user, setUser }) => {
 			}
 
 			setWeather(data);
+            await loadWeeklyForecast(data.coord.lat, data.coord.lon);
 		} catch (error) {
 			console.error(error);
 			toast.error(error.message || "Something went wrong");
@@ -218,7 +220,10 @@ const WeatherPage = ({ user, setUser }) => {
             throw new Error(data.error || "Failed to load weekly forecast");
             }
 
-            setWeeklyForecast(data.daily?.slice(0, 7) || []);
+            console.log("Weekly forecast", data);
+            const dailyForecast = data.list.filter((item) => item.dt_txt.includes("12:00:00"))
+            setWeeklyForecast(dailyForecast);
+            console.log("dailyForecast", dailyForecast);
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Failed to load weekly forecast");
@@ -244,7 +249,8 @@ const WeatherPage = ({ user, setUser }) => {
                             <button onClick={handleFav}>
                                 {isFavorite ? "❤️" : "🤍"}
                             </button>
-                            <WeatherCard result={weather} unit={unit} />
+                            <WeatherCard result={weather} unit={unit}/>
+                            <WeeklyForecastCard weeklyForecast={weeklyForecast} unit={unit}/>
                         </>
                     )
 			)}

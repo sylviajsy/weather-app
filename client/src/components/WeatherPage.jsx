@@ -11,6 +11,8 @@ const WeatherPage = ({ user, setUser }) => {
 	const [error, setError] = useState(null);
 	const [unit, setUnit] = useState("F");
 
+    const [weeklyForecast, setWeeklyForecast] = useState([]);
+
     const [favorites, setFavorites] = useState([]);
     const [favoriteWeather, setFavoriteWeather] = useState([]);
 
@@ -206,6 +208,22 @@ const WeatherPage = ({ user, setUser }) => {
 	const toggleUnit = () => {
 		setUnit((prev) => (prev === "F" ? "C" : "F"));
 	};
+
+    const loadWeeklyForecast = async (lat, lon) => {
+        try {
+            const response = await fetch(`/api/weekly-forecast?lat=${lat}&lon=${lon}`);
+            const data = await response.json();
+
+            if (!response.ok) {
+            throw new Error(data.error || "Failed to load weekly forecast");
+            }
+
+            setWeeklyForecast(data.daily?.slice(0, 7) || []);
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Failed to load weekly forecast");
+        }
+    };
 
 	return (
 		<div>

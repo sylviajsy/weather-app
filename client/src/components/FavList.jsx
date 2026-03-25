@@ -1,9 +1,16 @@
 import "./FavList.css"
 
-const FavList = ({ favoriteWeather, handleFavList }) => {
+const FavList = ({ favoriteWeather, handleFavList, unit }) => {
     
     if (!favoriteWeather || favoriteWeather.length === 0) {
         return <p style={{ marginTop: "20px" }}>No favorite cities yet 🌤</p>;
+    }
+
+    const convertTemp = (temp) => {
+        if (unit == "C"){
+            return Math.round((temp - 32) * 5 / 9);
+        }
+        return Math.round(temp);
     }
 
   return (
@@ -25,7 +32,7 @@ const FavList = ({ favoriteWeather, handleFavList }) => {
                     />
                 </div>
 
-                <p className="fav-weather-temp">Temperature : {item.weather.main.temp} F</p>
+                <p className="fav-weather-temp">Temperature : {convertTemp(item.weather.main.temp)} {unit}</p>
                 <p className="fav-weather-humidity">Humidity : {item.weather.main.humidity} %</p>
             </div>
         ))}

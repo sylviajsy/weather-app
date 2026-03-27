@@ -1,0 +1,49 @@
+.weekly-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.weekly-card {
+  background: linear-gradient(135deg, #2f3645, #3a4152);
+  border: 1px solid #dbe7ff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 260px;
+  min-height: 220px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.weekly-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.weekly-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.weekly-weather-icon {
+  width: 70px;
+  height: 70px;
+}
+
+.weekly-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

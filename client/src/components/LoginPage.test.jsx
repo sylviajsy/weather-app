@@ -62,4 +62,30 @@ describe('Login Page Integration Test', () => {
             expect(mockSetUser).toHaveBeenCalledWith(mockResponse.user);
         });
     })
+
+    test('Login fails', async () => {
+        const user = userEvent.setup();
+        const mockSetUser = vi.fn();
+
+        global.fetch = vi.fn().mockResolvedValue({
+            ok: false,
+            json: async () => ({
+                error: "Invalid password",
+            }),
+        });
+
+        render(<LoginPage setUser={mockSetUser} />);
+
+        await user.type(screen.getByPlaceholderText(/email/i), "siyi@email.com");
+        await user.type(screen.getByPlaceholderText(/password/i), "wrongpass");
+
+        await user.click(screen.getByRole("button", { name: /submit/i }));
+
+        await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalled();
+        });
+
+        expect(mockSetUser).not.toHaveBeenCalled();
+        expect(localStorage.getItem("token")).toBeNull();
+    })
 })

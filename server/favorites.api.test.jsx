@@ -19,7 +19,7 @@ beforeAll(async () => {
 });
 
 describe('Favorites API test', () => {
-    test("GET /api/fav should return favorites", async () => {
+    test('GET /api/fav should return favorites', async () => {
         const response = await fetch("http://localhost:8080/api/fav", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -31,4 +31,22 @@ describe('Favorites API test', () => {
         expect(response.ok).toBe(true);
         expect(Array.isArray(data)).toBe(true);
     });
+
+    test('POST /api/fav adds a city', async () => {
+        const response = await fetch("http://localhost:8080/api/fav", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                cityName: "Boston",
+            }),
+        });
+
+        const data = await response.json();
+
+        expect(response.status).toBe(201);
+        expect(data.city_name).toBe("Boston");
+    })
 })

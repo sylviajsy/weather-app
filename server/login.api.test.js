@@ -19,4 +19,22 @@ describe('POST /api/login', () => {
         expect(data.token).toBeDefined();
         expect(data.user.email).toBe("siyi@email.com");
     })
+
+    test('Login Fail', async () => {
+        const response = await fetch("http://localhost:8080/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: "siyi@email.com",
+                password: "wrongpwd",
+            }),
+        });
+
+        const data = await response.json();
+
+        expect(response.status).toBe(401);
+        expect(data.error).toMatch(/wrong/i);
+    })
 })
